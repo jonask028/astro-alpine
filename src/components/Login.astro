@@ -1,0 +1,55 @@
+---
+---
+
+<div
+  class="form-container"
+  x-data="{
+      email: '',
+      password: '',
+      emailValidationError: false,
+      passwordValidationError: false
+    }"
+>
+  <form
+    id="loginForm"
+    novalidate
+    @submit.prevent="
+      emailValidationError = !$refs.emailInput.checkValidity();
+      passwordValidationError = !$refs.passwordInput.checkValidity();
+      if (!emailValidationError && !passwordValidationError) {
+        console.log('logging in');
+      }"
+  >
+    <label for="email">Email</label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      x-ref="emailInput"
+      x-model="email"
+      required
+      placeholder="example@email.com"
+    />
+    <label for="password">Password</label>
+    <input
+      type="password"
+      id="password"
+      name="password"
+      x-ref="passwordInput"
+      x-model="password"
+      required
+      minlength="12"
+    />
+    <button :disabled="!email || !password" type="submit">
+      Log in
+    </button>
+  </form>
+  <div>
+    <p style="color: #ff0000" x-show="emailValidationError">
+      Email input must be valid email
+    </p>
+    <p style="color: #ff0000" x-show="passwordValidationError">
+      Password input must be at least 12 characters long
+    </p>
+  </div>
+</div>
